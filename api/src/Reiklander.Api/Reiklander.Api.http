@@ -1,0 +1,6 @@
+@Reiklander.Api_HostAddress = http://localhost:5163
+
+GET {{Reiklander.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
