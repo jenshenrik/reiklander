@@ -1,5 +1,8 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Reiklander.Api.Endpoints.Characters.Contracts;
+using Reiklander.Application.Characters.CreateCharacter;
 
 namespace Reiklander.Api.Endpoints.Characters;
 
@@ -9,7 +12,6 @@ public static class CharactersEndpointModule
     {
         var versionSet = app.NewApiVersionSet()
             .HasApiVersion(new ApiVersion(1, 0))
-            .HasApiVersion(new ApiVersion(2, 0))
             .ReportApiVersions()
             .Build();
 
@@ -20,8 +22,9 @@ public static class CharactersEndpointModule
         builder.MapGet("/", GetAllCharactersAsync)
             .MapToApiVersion(1.0);
 
-        builder.MapGet("/", GetAllCharactersAsync2)
-            .MapToApiVersion(2.0);
+        builder.MapPost("/", CreateCharacter)
+            .Produces<Guid>(StatusCodes.Status201Created)
+            .MapToApiVersion(1.0);
 
         return app;
     }
@@ -31,8 +34,10 @@ public static class CharactersEndpointModule
         return TypedResults.Ok("all chars v1");
     }
 
-    private static async Task<Ok<string>> GetAllCharactersAsync2(CancellationToken cancellationToken)
+    private static async Task<Created<Guid>> CreateCharacter([FromBody] CreateCharacterDto request, CreateCharacterHandler handler)
     {
-        return TypedResults.Ok("all chars v2");
+        var id = await handler.Handle(new CreateCharacterCommand(request.Name));
+
+        return TypedResults.Created($"/characters/{id}", id);
     }
 }

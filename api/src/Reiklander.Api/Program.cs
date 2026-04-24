@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using Reiklander.Api.Endpoints.Characters;
+using Reiklander.Application.Characters.CreateCharacter;
 using Reiklander.Domain.Kernel;
 using Reiklander.Infrastructure;
 using Scalar.AspNetCore;
@@ -11,6 +12,8 @@ builder.Services.AddDbContext<EventStoreDbContext>(options =>
         options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
 builder.Services.AddScoped<IEventStoreRepository, EventStoreRepository>();
+
+builder.Services.AddScoped<CreateCharacterHandler>();
 
 builder.Services.AddApiVersioning(options =>
 {
