@@ -24,6 +24,7 @@ public static class CharactersEndpointModule
 
         builder.MapPost("/", CreateCharacter)
             .Produces<Guid>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest)
             .MapToApiVersion(1.0);
 
         return app;
@@ -34,8 +35,11 @@ public static class CharactersEndpointModule
         return TypedResults.Ok("all chars v1");
     }
 
-    private static async Task<Created<Guid>> CreateCharacter([FromBody] CreateCharacterDto request, CreateCharacterHandler handler)
+    private static async Task<IResult> CreateCharacter([FromBody] CreateCharacterDto request, CreateCharacterHandler handler)
     {
+        if (string.IsNullOrWhiteSpace(request.Name))
+            return Results.BadRequest("Name cannot be empty.");
+
         var id = await handler.Handle(new CreateCharacterCommand(request.Name));
 
         return TypedResults.Created($"/characters/{id}", id);
