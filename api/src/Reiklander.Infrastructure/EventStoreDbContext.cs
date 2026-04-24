@@ -2,12 +2,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Reiklander.Infrastructure;
 
-public class EventStoreDbContext : DbContext
+public class EventStoreDbContext(DbContextOptions<EventStoreDbContext> options) : DbContext(options)
 {
     public DbSet<EventEntity> Events => Set<EventEntity>();
-
-    public EventStoreDbContext(DbContextOptions<EventStoreDbContext> options)
-        : base(options) { }
+    public DbSet<CharacterReadModel> Characters => Set<CharacterReadModel>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

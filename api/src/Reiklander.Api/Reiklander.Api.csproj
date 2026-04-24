@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Reiklander.Application\Reiklander.Application.csproj" />
     <ProjectReference Include="..\Reiklander.Infrastructure\Reiklander.Infrastructure.csproj" />
+    <ProjectReference Include="..\Reiklander.Contracts\Reiklander.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

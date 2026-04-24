@@ -1,3 +1,3 @@
 namespace Reiklander.Api.Endpoints.Characters.Contracts;
 
-public record CreateCharacterDto(string Name);
+public record CreateCharacterRequest(string Name);

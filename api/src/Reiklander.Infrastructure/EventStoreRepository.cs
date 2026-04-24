@@ -25,7 +25,7 @@ public class EventStoreRepository(EventStoreDbContext context) : IEventStoreRepo
         {
             version++;
 
-            context.Events.Add(new EventEntity
+            var entity = new EventEntity
             {
                 Id = Guid.NewGuid(),
                 AggregateId = aggregate.Id,
@@ -34,7 +34,11 @@ public class EventStoreRepository(EventStoreDbContext context) : IEventStoreRepo
                 EventType = e.GetType().Name,
                 Data = JsonSerializer.Serialize(e, e.GetType()),
                 OccurredOn = DateTime.UtcNow
-            });
+            };
+
+            context.Events.Add(entity);
+
+            await ProjectAsync(entity);
         }
 
         await context.SaveChangesAsync();
@@ -42,7 +46,6 @@ public class EventStoreRepository(EventStoreDbContext context) : IEventStoreRepo
         aggregate.MarkEventsCommitted();
     }
 
-    // public async Task<Character> LoadAsync(Guid id)
     public async Task<T> LoadAsync<T>(Guid id) where T : AggregateRoot, new()
     {
         var events = await context.Events
@@ -65,7 +68,35 @@ public class EventStoreRepository(EventStoreDbContext context) : IEventStoreRepo
             nameof(ExperienceEarned) =>
                 JsonSerializer.Deserialize<ExperienceEarned>(e.Data)!,
 
+            nameof(CharacterCreated) =>
+                JsonSerializer.Deserialize<CharacterCreated>(e.Data)!,
+
             _ => throw new Exception("Unknown event type")
         };
+    }
+
+    private async Task ProjectAsync(EventEntity entity)
+    {
+        var e = Deserialize(entity);
+
+        switch (e)
+        {
+            case CharacterCreated created:
+                context.Characters.Add(new CharacterReadModel
+                {
+                    Id = entity.AggregateId,
+                    Name = created.Name,
+                    Experience = 0
+                });
+
+                break;
+
+            case ExperienceEarned xp:
+                var character = await context.Characters.FindAsync(entity.AggregateId);
+                if (character != null)
+                    character.Experience += xp.Amount;
+
+                break;
+        }
     }
 }

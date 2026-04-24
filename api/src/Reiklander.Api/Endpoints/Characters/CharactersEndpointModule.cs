@@ -2,7 +2,9 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Reiklander.Api.Endpoints.Characters.Contracts;
+using Reiklander.Application;
 using Reiklander.Application.Characters.CreateCharacter;
+using Reiklander.Infrastructure;
 
 namespace Reiklander.Api.Endpoints.Characters;
 
@@ -22,7 +24,12 @@ public static class CharactersEndpointModule
         builder.MapGet("/", GetAllCharactersAsync)
             .MapToApiVersion(1.0);
 
-        builder.MapPost("/", CreateCharacter)
+        builder.MapGet("/{id}", GetCharacterAsync)
+            .WithTags("Get character")
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces<CharacterResponse>(StatusCodes.Status200OK);
+
+        builder.MapPost("/", CreateCharacterAsync)
             .Produces<Guid>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .MapToApiVersion(1.0);
@@ -35,7 +42,17 @@ public static class CharactersEndpointModule
         return TypedResults.Ok("all chars v1");
     }
 
-    private static async Task<IResult> CreateCharacter([FromBody] CreateCharacterDto request, CreateCharacterHandler handler)
+    private static async Task<IResult> GetCharacterAsync([FromRoute] Guid id, ICharacterQueries queries)
+    {
+        var character = await queries.GetById(id);
+
+        if (character == null)
+            return Results.NotFound();
+
+        return Results.Ok(character);
+    }
+
+    private static async Task<IResult> CreateCharacterAsync([FromBody] CreateCharacterRequest request, CreateCharacterHandler handler)
     {
         if (string.IsNullOrWhiteSpace(request.Name))
             return Results.BadRequest("Name cannot be empty.");

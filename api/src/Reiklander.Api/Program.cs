@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using Reiklander.Api.Endpoints.Characters;
+using Reiklander.Application;
 using Reiklander.Application.Characters.CreateCharacter;
 using Reiklander.Domain.Kernel;
 using Reiklander.Infrastructure;
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<EventStoreDbContext>(options =>
 builder.Services.AddScoped<IEventStoreRepository, EventStoreRepository>();
 
 builder.Services.AddScoped<CreateCharacterHandler>();
+
+builder.Services.AddScoped<ICharacterQueries, CharacterQueries>();
 
 builder.Services.AddApiVersioning(options =>
 {

@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Reiklander.Domain\Reiklander.Domain.csproj" />
+    <ProjectReference Include="..\Reiklander.Application\Reiklander.Application.csproj" />
   </ItemGroup>
 
 </Project>
