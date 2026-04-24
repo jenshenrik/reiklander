@@ -1,0 +1,14 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "Reiklander Local Postgres",
+            "Group": "Servers",
+            "Host": "reiklander-postgres",
+            "Port": 5432,
+            "MaintenanceDB": "reiklanderdb",
+            "Username": "admin",
+            "Password": "admin",
+            "SSLMode": "prefer"
+        }
+    }
+}
