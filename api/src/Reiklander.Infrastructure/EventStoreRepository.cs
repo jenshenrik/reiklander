@@ -32,7 +32,7 @@ public class EventStoreRepository(EventStoreDbContext context) : IEventStoreRepo
                 AggregateType = aggregate.GetType().Name,
                 Version = version,
                 EventType = e.GetType().Name,
-                Data = JsonSerializer.Serialize(e),
+                Data = JsonSerializer.Serialize(e, e.GetType()),
                 OccurredOn = DateTime.UtcNow
             });
         }
