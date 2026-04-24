@@ -13,7 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Reiklander.Domain\Reiklander.Domain.csproj" />
+    <ProjectReference Include="..\Reiklander.Application\Reiklander.Application.csproj" />
+    <ProjectReference Include="..\Reiklander.Infrastructure\Reiklander.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
