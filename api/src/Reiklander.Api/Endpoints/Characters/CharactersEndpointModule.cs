@@ -72,7 +72,6 @@ public static class CharactersEndpointModule
 
     private static async Task<IResult> EarnExperiencePoints([FromRoute] Guid id, [FromBody] EarhXpRequest request, EarnExperiencePointsHandler handler)
     {
-        Console.WriteLine($"{id}");
         await handler.Handle(new EarnExperiencePointsCommand(id, request.Amount));
 
         return Results.Ok();

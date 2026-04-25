@@ -2,4 +2,4 @@ using Reiklander.Domain.Kernel;
 
 namespace Reiklander.Domain.Characters.Events;
 
-public record CharacterCreated(string Name) : IDomainEvent { }
+public record CharacterCreated(Guid Id, string Name) : IDomainEvent { }

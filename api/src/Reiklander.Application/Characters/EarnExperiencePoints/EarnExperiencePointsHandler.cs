@@ -11,8 +11,6 @@ public class EarnExperiencePointsHandler(IEventStoreRepository repository)
     {
         var character = await repository.LoadAsync<Character>(command.CharacterId);
 
-        Console.WriteLine($"{character.Name}");
-
         character.EarnExperience(command.Amount);
 
         await repository.SaveAsync(character);

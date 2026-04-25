@@ -23,6 +23,7 @@ public class EventStoreRepository(EventStoreDbContext context) : IEventStoreRepo
 
         foreach (var e in events)
         {
+            Console.WriteLine($"aggregate id {aggregate.Id}");
             version++;
 
             var entity = new EventEntity

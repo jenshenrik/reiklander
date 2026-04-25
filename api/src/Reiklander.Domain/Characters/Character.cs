@@ -22,7 +22,7 @@ public class Character : AggregateRoot
             Name = name
         };
 
-        character.Raise(new CharacterCreated(name));
+        character.Raise(new CharacterCreated(id, name));
 
         return character;
     }
@@ -46,6 +46,7 @@ public class Character : AggregateRoot
                 break;
 
             case CharacterCreated character:
+                Id = character.Id;
                 Name = character.Name;
 
                 break;
