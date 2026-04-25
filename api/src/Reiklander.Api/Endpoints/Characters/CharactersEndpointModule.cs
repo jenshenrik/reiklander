@@ -5,7 +5,9 @@ using Reiklander.Api.Endpoints.Characters.Contracts;
 using Reiklander.Application;
 using Reiklander.Application.Characters.CreateCharacter;
 using Reiklander.Application.Characters.EarnExperiencePoints;
+using Reiklander.Application.Characters.AdvanceAttribute;
 using Reiklander.Contracts.Characters;
+using Reiklander.Domain.Characters;
 using Reiklander.Infrastructure;
 
 namespace Reiklander.Api.Endpoints.Characters;
@@ -42,6 +44,13 @@ public static class CharactersEndpointModule
             .Produces(StatusCodes.Status404NotFound)
             .MapToApiVersion(1.0);
 
+        builder.MapPost("/{id}/{attribute}/advance", AdvanceAttribute)
+            .WithTags("Advance attribute")
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .MapToApiVersion(1.0);
+
         return app;
     }
 
@@ -57,7 +66,7 @@ public static class CharactersEndpointModule
         if (character == null)
             return Results.NotFound();
 
-        return Results.Ok(character);
+        return TypedResults.Ok(character);
     }
 
     private static async Task<IResult> CreateCharacterAsync([FromBody] CreateCharacterRequest request, CreateCharacterHandler handler)
@@ -74,6 +83,13 @@ public static class CharactersEndpointModule
     {
         await handler.Handle(new EarnExperiencePointsCommand(id, request.Amount));
 
-        return Results.Ok();
+        return TypedResults.Ok();
+    }
+
+    private static async Task<IResult> AdvanceAttribute([FromRoute] Guid id, [FromRoute] AttributeType attribute, AdvanceAttributeHandler handler)
+    {
+        await handler.Handle(new AdvanceAttributeCommand(id, attribute));
+
+        return TypedResults.Ok();
     }
 }

@@ -2,8 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using Reiklander.Api.Endpoints.Characters;
 using Reiklander.Application;
+using Reiklander.Application.Characters.AdvanceAttribute;
 using Reiklander.Application.Characters.CreateCharacter;
 using Reiklander.Application.Characters.EarnExperiencePoints;
+using Reiklander.Application.Kernel;
+using Reiklander.Domain.Characters.Events;
 using Reiklander.Domain.Kernel;
 using Reiklander.Infrastructure;
 using Scalar.AspNetCore;
@@ -17,8 +20,14 @@ builder.Services.AddScoped<IEventStoreRepository, EventStoreRepository>();
 
 builder.Services.AddScoped<CreateCharacterHandler>();
 builder.Services.AddScoped<EarnExperiencePointsHandler>();
+builder.Services.AddScoped<AdvanceAttributeHandler>();
 
 builder.Services.AddScoped<ICharacterQueries, CharacterQueries>();
+
+builder.Services.AddScoped<ProjectionDispatcher>();
+builder.Services.AddScoped<IProjectionHandler<CharacterCreated>, CharacterCreatedProjection>();
+builder.Services.AddScoped<IProjectionHandler<ExperienceEarned>, ExperienceEarnedProjection>();
+builder.Services.AddScoped<IProjectionHandler<AttributeAdvanced>, AttributeAdvancedProjection>();
 
 builder.Services.AddApiVersioning(options =>
 {

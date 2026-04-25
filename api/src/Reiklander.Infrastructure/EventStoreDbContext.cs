@@ -20,5 +20,19 @@ public class EventStoreDbContext(DbContextOptions<EventStoreDbContext> options) 
 
             e.Property(x => x.Data).HasColumnType("jsonb");
         });
+
+        modelBuilder.Entity<CharacterReadModel>(e =>
+                {
+                    e.OwnsOne(c => c.WeaponSkill);
+                    e.OwnsOne(c => c.BallisticSkill);
+                    e.OwnsOne(c => c.Strength);
+                    e.OwnsOne(c => c.Toughness);
+                    e.OwnsOne(c => c.Initiative);
+                    e.OwnsOne(c => c.Agility);
+                    e.OwnsOne(c => c.Dexterity);
+                    e.OwnsOne(c => c.Intelligence);
+                    e.OwnsOne(c => c.Willpower);
+                    e.OwnsOne(c => c.Fellowship);
+                });
     }
 }

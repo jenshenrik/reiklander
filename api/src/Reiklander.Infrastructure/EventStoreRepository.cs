@@ -5,7 +5,7 @@ using Reiklander.Domain.Kernel;
 
 namespace Reiklander.Infrastructure;
 
-public class EventStoreRepository(EventStoreDbContext context) : IEventStoreRepository
+public class EventStoreRepository(EventStoreDbContext context, ProjectionDispatcher dispatcher) : IEventStoreRepository
 {
     public async Task SaveAsync(AggregateRoot aggregate)
     {
@@ -39,7 +39,8 @@ public class EventStoreRepository(EventStoreDbContext context) : IEventStoreRepo
 
             context.Events.Add(entity);
 
-            await ProjectAsync(entity);
+            var domainEvent = Deserialize(entity);
+            await dispatcher.Dispatch(domainEvent, entity.AggregateId);
         }
 
         await context.SaveChangesAsync();
@@ -72,32 +73,10 @@ public class EventStoreRepository(EventStoreDbContext context) : IEventStoreRepo
             nameof(CharacterCreated) =>
                 JsonSerializer.Deserialize<CharacterCreated>(e.Data)!,
 
+            nameof(AttributeAdvanced) =>
+                JsonSerializer.Deserialize<AttributeAdvanced>(e.Data)!,
+
             _ => throw new Exception("Unknown event type")
         };
-    }
-
-    private async Task ProjectAsync(EventEntity entity)
-    {
-        var e = Deserialize(entity);
-
-        switch (e)
-        {
-            case CharacterCreated created:
-                context.Characters.Add(new CharacterReadModel
-                {
-                    Id = entity.AggregateId,
-                    Name = created.Name,
-                    Experience = 0
-                });
-
-                break;
-
-            case ExperienceEarned xp:
-                var character = await context.Characters.FindAsync(entity.AggregateId);
-                if (character != null)
-                    character.Experience += xp.Amount;
-
-                break;
-        }
     }
 }
