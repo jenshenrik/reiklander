@@ -8,7 +8,7 @@ public abstract class AggregateRoot
 
     public int Version { get; private set; }
 
-    private readonly List<IDomainEvent> _uncommittedEvents = new();
+    private readonly List<IDomainEvent> _uncommittedEvents = [];
     public IReadOnlyList<IDomainEvent> UncommittedEvents => _uncommittedEvents;
 
     protected void Raise(IDomainEvent e)
@@ -16,6 +16,7 @@ public abstract class AggregateRoot
         Apply(e);
         _uncommittedEvents.Add(e);
     }
+
     protected abstract void Apply(IDomainEvent e);
 
     public void MarkEventsCommitted()

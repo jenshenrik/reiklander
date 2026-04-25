@@ -40,13 +40,13 @@ public class Character : AggregateRoot
     {
         switch (e)
         {
-            case ExperienceEarned ee:
-                ExperiencePoints += ee.Amount;
+            case ExperienceEarned xp:
+                ExperiencePoints += xp.Amount;
 
                 break;
 
-            case CharacterCreated cc:
-                Name = cc.Name;
+            case CharacterCreated character:
+                Name = character.Name;
 
                 break;
         }
