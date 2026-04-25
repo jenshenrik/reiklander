@@ -65,6 +65,8 @@ public class Character : AggregateRoot
                 return WeaponSkill;
             case AttributeType.BallisticSkill:
                 return BallisticSkill;
+            case AttributeType.Strength:
+                return Strength;
             case AttributeType.Toughness:
                 return Toughness;
             case AttributeType.Initiative:
