@@ -26,6 +26,7 @@ public static class CharactersEndpointModule
             .WithApiVersionSet(versionSet);
 
         builder.MapGet("/", GetAllCharactersAsync)
+            .WithTags("Get all characters")
             .MapToApiVersion(1.0);
 
         builder.MapGet("/{id}", GetCharacterAsync)
@@ -34,6 +35,7 @@ public static class CharactersEndpointModule
             .Produces<CharacterResponse>(StatusCodes.Status200OK);
 
         builder.MapPost("/", CreateCharacterAsync)
+            .WithTags("Create new character")
             .Produces<Guid>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .MapToApiVersion(1.0);
@@ -44,7 +46,7 @@ public static class CharactersEndpointModule
             .Produces(StatusCodes.Status404NotFound)
             .MapToApiVersion(1.0);
 
-        builder.MapPost("/{id}/{attribute}/advance", AdvanceAttribute)
+        builder.MapPost("/{id}/attributes/{attribute}/advance", AdvanceAttribute)
             .WithTags("Advance attribute")
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status200OK)
