@@ -2,6 +2,10 @@ namespace Reiklander.Domain.Characters;
 
 public class AttributeState
 {
+    public static AttributeState From(int value, int advances) =>
+        new()
+        { Value = value, Advances = advances };
+
     public int Value { get; private set; }
     public int Advances { get; private set; }
 
