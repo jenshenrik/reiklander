@@ -7,22 +7,17 @@ public class Character : AggregateRoot
 {
     public Character() { }
 
-    public static Character Create(Guid id, string name)
+    public static Character Create(Guid id)
     {
         if (id == Guid.Empty)
             throw new InvalidDataException("Character ID is not a valid GUID");
 
-        if (string.IsNullOrWhiteSpace(name))
-            throw new InvalidDataException("Character name cannot be empty");
-
-
         var character = new Character
         {
             Id = id,
-            Name = name
         };
 
-        character.Raise(new CharacterCreated(id, name));
+        character.Raise(new CharacterCreated(id));
 
         return character;
     }
@@ -41,6 +36,11 @@ public class Character : AggregateRoot
     public AttributeState Intelligence { get; private set; } = new();
     public AttributeState Willpower { get; private set; } = new();
     public AttributeState Fellowship { get; private set; } = new();
+
+    public void NameCharacter(string name)
+    {
+        Raise(new NameCharacter(name));
+    }
 
     public void EarnExperience(int amount)
     {
@@ -88,6 +88,11 @@ public class Character : AggregateRoot
     {
         switch (e)
         {
+            case NameCharacter name:
+                Name = name.Name;
+
+                break;
+
             case ExperienceEarned xp:
                 ExperiencePoints += xp.Amount;
 
@@ -95,7 +100,6 @@ public class Character : AggregateRoot
 
             case CharacterCreated character:
                 Id = character.Id;
-                Name = character.Name;
 
                 break;
 

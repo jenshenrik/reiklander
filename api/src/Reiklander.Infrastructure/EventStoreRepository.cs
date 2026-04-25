@@ -73,6 +73,9 @@ public class EventStoreRepository(EventStoreDbContext context, ProjectionDispatc
             nameof(CharacterCreated) =>
                 JsonSerializer.Deserialize<CharacterCreated>(e.Data)!,
 
+            nameof(NameCharacter) =>
+                JsonSerializer.Deserialize<NameCharacter>(e.Data)!,
+
             nameof(AttributeAdvanced) =>
                 JsonSerializer.Deserialize<AttributeAdvanced>(e.Data)!,
 

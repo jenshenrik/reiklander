@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Reiklander.Api.Endpoints.Characters.Contracts;
 using Reiklander.Application;
 using Reiklander.Application.Characters.CreateCharacter;
+using Reiklander.Application.Characters.NameCharacter;
 using Reiklander.Application.Characters.EarnExperiencePoints;
 using Reiklander.Application.Characters.AdvanceAttribute;
 using Reiklander.Contracts.Characters;
@@ -53,6 +54,13 @@ public static class CharactersEndpointModule
             .Produces(StatusCodes.Status404NotFound)
             .MapToApiVersion(1.0);
 
+        builder.MapPost("/{id}/name", NameCharacter)
+            .WithTags("Name character")
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .MapToApiVersion(1.0);
+
         return app;
     }
 
@@ -71,14 +79,23 @@ public static class CharactersEndpointModule
         return TypedResults.Ok(character);
     }
 
-    private static async Task<IResult> CreateCharacterAsync([FromBody] CreateCharacterRequest request, CreateCharacterHandler handler)
+    private static async Task<IResult> CreateCharacterAsync(CreateCharacterHandler handler)
+    {
+        var id = await handler.Handle(new CreateCharacterCommand());
+
+        return TypedResults.Created($"/characters/{id}", id);
+    }
+
+    private static async Task<IResult> NameCharacter([FromRoute] Guid id, [FromBody] NameCharacterRequest request, NameCharacterHandler handler)
     {
         if (string.IsNullOrWhiteSpace(request.Name))
             return Results.BadRequest("Name cannot be empty.");
 
-        var id = await handler.Handle(new CreateCharacterCommand(request.Name));
+        Console.WriteLine($"{id}");
 
-        return TypedResults.Created($"/characters/{id}", id);
+        await handler.Handle(new NameCharacterCommand(id, request.Name));
+
+        return TypedResults.Ok();
     }
 
     private static async Task<IResult> EarnExperiencePoints([FromRoute] Guid id, [FromBody] EarhXpRequest request, EarnExperiencePointsHandler handler)

@@ -23,6 +23,8 @@ public class EventStoreDbContext(DbContextOptions<EventStoreDbContext> options) 
 
         modelBuilder.Entity<CharacterReadModel>(e =>
                 {
+                    e.Property(x => x.Name).IsRequired(false);
+
                     e.OwnsOne(c => c.WeaponSkill);
                     e.OwnsOne(c => c.BallisticSkill);
                     e.OwnsOne(c => c.Strength);

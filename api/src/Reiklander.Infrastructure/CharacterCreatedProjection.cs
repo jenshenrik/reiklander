@@ -12,7 +12,6 @@ public class CharacterCreatedProjection(EventStoreDbContext context) : IProjecti
         context.Characters.Add(new CharacterReadModel
         {
             Id = aggregateId,
-            Name = @event.Name,
             Experience = 0
         });
     }
