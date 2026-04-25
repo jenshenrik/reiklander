@@ -101,6 +101,7 @@ public class Character : AggregateRoot
 
             case AttributeAdvanced advance:
                 ExperiencePoints -= advance.ExperienceCost;
+
                 GetAttribute(advance.Attribute).Advance();
 
                 break;

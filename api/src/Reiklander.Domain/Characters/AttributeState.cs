@@ -16,7 +16,7 @@ public class AttributeState
     public int GetAdvanceCost()
     {
         // TODO: implement
-        return Advances + 1;
+        return 50;
     }
 
     public void Load(int value, int advances)
