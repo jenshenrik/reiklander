@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Reiklander.Api.Endpoints.Characters.Contracts;
 using Reiklander.Application;
 using Reiklander.Application.Characters.CreateCharacter;
+using Reiklander.Application.Characters.EarnExperiencePoints;
+using Reiklander.Contracts.Characters;
 using Reiklander.Infrastructure;
 
 namespace Reiklander.Api.Endpoints.Characters;
@@ -34,6 +36,12 @@ public static class CharactersEndpointModule
             .Produces(StatusCodes.Status400BadRequest)
             .MapToApiVersion(1.0);
 
+        builder.MapPost("/{id}/xp", EarnExperiencePoints)
+            .WithTags("Earn experience points")
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .MapToApiVersion(1.0);
+
         return app;
     }
 
@@ -60,5 +68,13 @@ public static class CharactersEndpointModule
         var id = await handler.Handle(new CreateCharacterCommand(request.Name));
 
         return TypedResults.Created($"/characters/{id}", id);
+    }
+
+    private static async Task<IResult> EarnExperiencePoints([FromRoute] Guid id, [FromBody] EarhXpRequest request, EarnExperiencePointsHandler handler)
+    {
+        Console.WriteLine($"{id}");
+        await handler.Handle(new EarnExperiencePointsCommand(id, request.Amount));
+
+        return Results.Ok();
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.OpenApi;
 using Reiklander.Api.Endpoints.Characters;
 using Reiklander.Application;
 using Reiklander.Application.Characters.CreateCharacter;
+using Reiklander.Application.Characters.EarnExperiencePoints;
 using Reiklander.Domain.Kernel;
 using Reiklander.Infrastructure;
 using Scalar.AspNetCore;
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<EventStoreDbContext>(options =>
 builder.Services.AddScoped<IEventStoreRepository, EventStoreRepository>();
 
 builder.Services.AddScoped<CreateCharacterHandler>();
+builder.Services.AddScoped<EarnExperiencePointsHandler>();
 
 builder.Services.AddScoped<ICharacterQueries, CharacterQueries>();
 
