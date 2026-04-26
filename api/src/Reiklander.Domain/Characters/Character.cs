@@ -8,6 +8,26 @@ public class Character : AggregateRoot
 {
     public Character() { }
 
+
+    public string Species { get; private set; } = default!;
+
+    public string Name { get; private set; } = default!;
+
+    public int ExperiencePoints { get; private set; }
+
+    #region Attributes
+    public AttributeState WeaponSkill { get; private set; } = new(0, 0);
+    public AttributeState BallisticSkill { get; private set; } = new(0, 0);
+    public AttributeState Strength { get; private set; } = new(0, 0);
+    public AttributeState Toughness { get; private set; } = new(0, 0);
+    public AttributeState Initiative { get; private set; } = new(0, 0);
+    public AttributeState Agility { get; private set; } = new(0, 0);
+    public AttributeState Dexterity { get; private set; } = new(0, 0);
+    public AttributeState Intelligence { get; private set; } = new(0, 0);
+    public AttributeState Willpower { get; private set; } = new(0, 0);
+    public AttributeState Fellowship { get; private set; } = new(0, 0);
+    #endregion
+
     public static Character Create(Guid id)
     {
         if (id == Guid.Empty)
@@ -23,20 +43,13 @@ public class Character : AggregateRoot
         return character;
     }
 
-    public string Name { get; private set; } = default!;
+    public void SelectSpecies(string speciesName)
+    {
+        if (!string.IsNullOrWhiteSpace(Species))
+            throw new InvalidOperationException("Species already selected");
 
-    public int ExperiencePoints { get; private set; }
-
-    public AttributeState WeaponSkill { get; private set; } = new(0, 0);
-    public AttributeState BallisticSkill { get; private set; } = new(0, 0);
-    public AttributeState Strength { get; private set; } = new(0, 0);
-    public AttributeState Toughness { get; private set; } = new(0, 0);
-    public AttributeState Initiative { get; private set; } = new(0, 0);
-    public AttributeState Agility { get; private set; } = new(0, 0);
-    public AttributeState Dexterity { get; private set; } = new(0, 0);
-    public AttributeState Intelligence { get; private set; } = new(0, 0);
-    public AttributeState Willpower { get; private set; } = new(0, 0);
-    public AttributeState Fellowship { get; private set; } = new(0, 0);
+        Raise(new SpeciesSelected(speciesName));
+    }
 
     public void NameCharacter(string name)
     {
@@ -80,6 +93,11 @@ public class Character : AggregateRoot
     {
         switch (e)
         {
+            case SpeciesSelected species:
+                Species = species.Species;
+
+                break;
+
             case NameCharacter name:
                 Name = name.Name;
 

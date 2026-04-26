@@ -1,7 +1,7 @@
 using Reiklander.Application.Kernel;
 using Reiklander.Domain.Characters.Events;
 using Reiklander.Infrastructure.Persistence;
-using Reiklander.Infrastructure.Queries.Character.ReadModels;
+using Reiklander.Infrastructure.Queries.Characters.ReadModels;
 
 namespace Reiklander.Infrastructure.Projections.Characters;
 

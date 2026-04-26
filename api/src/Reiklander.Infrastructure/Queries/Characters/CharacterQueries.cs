@@ -28,6 +28,7 @@ public class CharacterQueries(EventStoreDbContext context) : ICharacterQueries
         var fel = new AttributeResponse(c.Fellowship.Value, c.Fellowship.Bonus, c.Fellowship.CostToAdvance);
         return new CharacterResponse
         (
+            c.Species,
             c.Name,
             c.Experience,
             ws, bs, s, t, i, agi, dex, intel, wis, fel

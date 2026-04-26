@@ -4,14 +4,14 @@ using Reiklander.Infrastructure.Persistence;
 
 namespace Reiklander.Infrastructure.Projections.Characters;
 
-public class NameCharacterProjection(EventStoreDbContext context) : IProjectionHandler<NameCharacter>
+public class SpeciesSelectedProjection(EventStoreDbContext context) : IProjectionHandler<SpeciesSelected>
 {
-    public async Task Handle(NameCharacter @event, Guid aggregateId)
+    public async Task Handle(SpeciesSelected @event, Guid aggregateId)
     {
         var character = await context.Characters.FindAsync(aggregateId);
 
         if (character == null) return;
 
-        character.Name = @event.Name;
+        character.Species = @event.Species;
     }
 }

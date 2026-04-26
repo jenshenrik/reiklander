@@ -6,6 +6,7 @@ using Reiklander.Application.Characters.AdvanceAttribute;
 using Reiklander.Application.Characters.CreateCharacter;
 using Reiklander.Application.Characters.EarnExperiencePoints;
 using Reiklander.Application.Characters.NameCharacter;
+using Reiklander.Application.Characters.SelectSpecies;
 using Reiklander.Application.Kernel;
 using Reiklander.Domain.Characters.Events;
 using Reiklander.Domain.Kernel;
@@ -21,8 +22,10 @@ builder.Services.AddDbContext<EventStoreDbContext>(options =>
         options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
 builder.Services.AddScoped<IEventStoreRepository, EventStoreRepository>();
+builder.Services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 
 builder.Services.AddScoped<CreateCharacterHandler>();
+builder.Services.AddScoped<SelectSpeciesHandler>();
 builder.Services.AddScoped<NameCharacterHandler>();
 builder.Services.AddScoped<EarnExperiencePointsHandler>();
 builder.Services.AddScoped<AdvanceAttributeHandler>();
@@ -31,6 +34,7 @@ builder.Services.AddScoped<ICharacterQueries, CharacterQueries>();
 
 builder.Services.AddScoped<ProjectionDispatcher>();
 builder.Services.AddScoped<IProjectionHandler<CharacterCreated>, CharacterCreatedProjection>();
+builder.Services.AddScoped<IProjectionHandler<SpeciesSelected>, SpeciesSelectedProjection>();
 builder.Services.AddScoped<IProjectionHandler<NameCharacter>, NameCharacterProjection>();
 builder.Services.AddScoped<IProjectionHandler<ExperienceEarned>, ExperienceEarnedProjection>();
 builder.Services.AddScoped<IProjectionHandler<AttributeAdvanced>, AttributeAdvancedProjection>();

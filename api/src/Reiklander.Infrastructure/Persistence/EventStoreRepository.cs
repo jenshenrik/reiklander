@@ -68,14 +68,17 @@ public class EventStoreRepository(EventStoreDbContext context, ProjectionDispatc
     {
         return e.EventType switch
         {
-            nameof(ExperienceEarned) =>
-                JsonSerializer.Deserialize<ExperienceEarned>(e.Data)!,
-
             nameof(CharacterCreated) =>
                 JsonSerializer.Deserialize<CharacterCreated>(e.Data)!,
 
+            nameof(SpeciesSelected) =>
+                JsonSerializer.Deserialize<SpeciesSelected>(e.Data)!,
+
             nameof(NameCharacter) =>
                 JsonSerializer.Deserialize<NameCharacter>(e.Data)!,
+
+            nameof(ExperienceEarned) =>
+                JsonSerializer.Deserialize<ExperienceEarned>(e.Data)!,
 
             nameof(AttributeAdvanced) =>
                 JsonSerializer.Deserialize<AttributeAdvanced>(e.Data)!,

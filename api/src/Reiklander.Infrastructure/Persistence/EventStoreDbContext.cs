@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Reiklander.Infrastructure.Queries.Character.ReadModels;
+using Reiklander.Infrastructure.Queries.Characters.ReadModels;
 
 namespace Reiklander.Infrastructure.Persistence;
 
@@ -25,6 +25,7 @@ public class EventStoreDbContext(DbContextOptions<EventStoreDbContext> options) 
         modelBuilder.Entity<CharacterReadModel>(e =>
                 {
                     e.Property(x => x.Name).IsRequired(false);
+                    e.Property(x => x.Species).IsRequired(false);
 
                     e.OwnsOne(c => c.WeaponSkill);
                     e.OwnsOne(c => c.BallisticSkill);

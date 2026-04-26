@@ -3,6 +3,7 @@ using Reiklander.Contracts.Attributes;
 namespace Reiklander.Api.Endpoints.Characters.Contracts;
 
 public record CharacterResponse(
+    string Species,
     string Name,
     int Xp,
     AttributeResponse WeaponSkill,

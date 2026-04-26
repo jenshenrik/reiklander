@@ -11,6 +11,7 @@ using Reiklander.Contracts.Characters;
 using Reiklander.Domain.Characters;
 using Reiklander.Infrastructure;
 using Reiklander.Domain.Characters.Attributes;
+using Reiklander.Application.Characters.SelectSpecies;
 
 namespace Reiklander.Api.Endpoints.Characters;
 
@@ -39,6 +40,12 @@ public static class CharactersEndpointModule
         builder.MapPost("/", CreateCharacterAsync)
             .WithTags("Create new character")
             .Produces<Guid>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest)
+            .MapToApiVersion(1.0);
+
+        builder.MapPost("/{id}/species", SelectSpeciesAsync)
+            .WithTags("Select species")
+            .Produces(StatusCodes.Status102Processing)
             .Produces(StatusCodes.Status400BadRequest)
             .MapToApiVersion(1.0);
 
@@ -87,6 +94,13 @@ public static class CharactersEndpointModule
         return TypedResults.Created($"/characters/{id}", id);
     }
 
+    private static async Task<IResult> SelectSpeciesAsync(Guid id, [FromBody] SelectSpeciesRequest request, SelectSpeciesHandler handler)
+    {
+        await handler.Handle(id, request.SpeciesName);
+
+        return TypedResults.Ok();
+    }
+
     private static async Task<IResult> NameCharacter([FromRoute] Guid id, [FromBody] NameCharacterRequest request, NameCharacterHandler handler)
     {
         if (string.IsNullOrWhiteSpace(request.Name))
@@ -99,7 +113,7 @@ public static class CharactersEndpointModule
         return TypedResults.Ok();
     }
 
-    private static async Task<IResult> EarnExperiencePoints([FromRoute] Guid id, [FromBody] EarhXpRequest request, EarnExperiencePointsHandler handler)
+    private static async Task<IResult> EarnExperiencePoints([FromRoute] Guid id, [FromBody] EarnXpRequest request, EarnExperiencePointsHandler handler)
     {
         await handler.Handle(new EarnExperiencePointsCommand(id, request.Amount));
 

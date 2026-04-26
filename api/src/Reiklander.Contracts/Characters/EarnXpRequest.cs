@@ -1,3 +1,3 @@
 namespace Reiklander.Contracts.Characters;
 
-public record EarhXpRequest(int Amount);
+public record EarnXpRequest(int Amount);

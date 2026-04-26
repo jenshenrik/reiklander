@@ -1,10 +1,9 @@
-using Reiklander.Infrastructure.Queries.Characters.ReadModels;
-
-namespace Reiklander.Infrastructure.Queries.Character.ReadModels;
+namespace Reiklander.Infrastructure.Queries.Characters.ReadModels;
 
 public class CharacterReadModel
 {
     public Guid Id { get; set; }
+    public string Species { get; set; } = default!;
     public string Name { get; set; } = default!;
     public int Experience { get; set; }
 
