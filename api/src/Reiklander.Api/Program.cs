@@ -4,17 +4,16 @@ using Reiklander.Api.Endpoints.Characters;
 using Reiklander.Application;
 using Reiklander.Application.Characters.AdvanceAttribute;
 using Reiklander.Application.Characters.CreateCharacter;
-using Reiklander.Application.Characters.NameCharacter;
 using Reiklander.Application.Characters.EarnExperiencePoints;
+using Reiklander.Application.Characters.NameCharacter;
 using Reiklander.Application.Kernel;
 using Reiklander.Domain.Characters.Events;
 using Reiklander.Domain.Kernel;
-using Reiklander.Infrastructure;
-using Scalar.AspNetCore;
 using Reiklander.Infrastructure.Persistence;
-using Reiklander.Infrastructure.Queries.Characters;
 using Reiklander.Infrastructure.Projections;
 using Reiklander.Infrastructure.Projections.Characters;
+using Reiklander.Infrastructure.Queries.Characters;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
