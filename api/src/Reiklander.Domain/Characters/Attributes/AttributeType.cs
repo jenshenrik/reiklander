@@ -1,4 +1,4 @@
-namespace Reiklander.Domain.Characters;
+namespace Reiklander.Domain.Characters.Attributes;
 
 public enum AttributeType
 {

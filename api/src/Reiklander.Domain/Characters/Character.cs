@@ -1,3 +1,4 @@
+using Reiklander.Domain.Characters.Attributes;
 using Reiklander.Domain.Characters.Events;
 using Reiklander.Domain.Kernel;
 
@@ -59,31 +60,20 @@ public class Character : AggregateRoot
 
     private AttributeState GetAttribute(AttributeType attribute)
     {
-        switch (attribute)
+        return attribute switch
         {
-            case AttributeType.WeaponSkill:
-                return WeaponSkill;
-            case AttributeType.BallisticSkill:
-                return BallisticSkill;
-            case AttributeType.Strength:
-                return Strength;
-            case AttributeType.Toughness:
-                return Toughness;
-            case AttributeType.Initiative:
-                return Initiative;
-            case AttributeType.Agility:
-                return Agility;
-            case AttributeType.Dexterity:
-                return Dexterity;
-            case AttributeType.Intelligence:
-                return Intelligence;
-            case AttributeType.Willpower:
-                return Willpower;
-            case AttributeType.Fellowship:
-                return Fellowship;
-        }
-
-        throw new InvalidOperationException("Unknown attribute type");
+            AttributeType.WeaponSkill => WeaponSkill,
+            AttributeType.BallisticSkill => BallisticSkill,
+            AttributeType.Strength => Strength,
+            AttributeType.Toughness => Toughness,
+            AttributeType.Initiative => Initiative,
+            AttributeType.Agility => Agility,
+            AttributeType.Dexterity => Dexterity,
+            AttributeType.Intelligence => Intelligence,
+            AttributeType.Willpower => Willpower,
+            AttributeType.Fellowship => Fellowship,
+            _ => throw new InvalidOperationException("Unknown attribute type"),
+        };
     }
 
     protected override void Apply(IDomainEvent e)
