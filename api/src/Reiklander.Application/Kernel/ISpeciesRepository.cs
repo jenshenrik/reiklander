@@ -4,5 +4,5 @@ namespace Reiklander.Application.Kernel;
 
 public interface ISpeciesRepository
 {
-    Task<Species> GetAsync(string speciesName);
+    Task<Species> GetAsync(string identifier);
 }

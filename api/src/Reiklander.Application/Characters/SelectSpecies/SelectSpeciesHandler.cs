@@ -9,10 +9,10 @@ public class SelectSpeciesHandler(IEventStoreRepository eventStoreRepository, IS
     private readonly IEventStoreRepository eventStoreRepository = eventStoreRepository;
     private readonly ISpeciesRepository speciesRepository = speciesRepository;
 
-    public async Task Handle(Guid characterId, string speciesName)
+    public async Task Handle(SelectSpeciesCommand command)
     {
-        var character = await eventStoreRepository.LoadAsync<Character>(characterId);
-        var species = await speciesRepository.GetAsync(speciesName);
+        var character = await eventStoreRepository.LoadAsync<Character>(command.CharacterId);
+        var species = await speciesRepository.GetAsync(command.SpeciesIdentifier);
 
         character.SelectSpecies(species.Name);
 

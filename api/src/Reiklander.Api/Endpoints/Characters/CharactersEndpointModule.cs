@@ -96,7 +96,7 @@ public static class CharactersEndpointModule
 
     private static async Task<IResult> SelectSpeciesAsync(Guid id, [FromBody] SelectSpeciesRequest request, SelectSpeciesHandler handler)
     {
-        await handler.Handle(id, request.SpeciesName);
+        await handler.Handle(new SelectSpeciesCommand(id, request.SpeciesName));
 
         return TypedResults.Ok();
     }
