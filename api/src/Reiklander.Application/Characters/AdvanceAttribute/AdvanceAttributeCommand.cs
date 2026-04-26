@@ -1,4 +1,4 @@
-using Reiklander.Domain.Characters;
+using Reiklander.Domain.Characters.Attributes;
 
 namespace Reiklander.Application.Characters.AdvanceAttribute;
 

@@ -1,5 +1,6 @@
 using Reiklander.Application.Kernel;
 using Reiklander.Domain.Characters;
+using Reiklander.Domain.Characters.Attributes;
 using Reiklander.Domain.Characters.Events;
 
 namespace Reiklander.Infrastructure;
@@ -18,12 +19,12 @@ public class AttributeAdvancedProjection(EventStoreDbContext context) : IProject
         var attribute = GetAttribute(character, @event.Attribute);
 
         var state = AttributeState.From(attribute.Value, attribute.Advances);
-        state.Advance();
+        var updatedAttributeState = state.Advance();
 
-        attribute.Value = state.Value;
-        attribute.Bonus = state.Bonus;
-        attribute.CostToAdvance = state.GetAdvanceCost();
-        attribute.Advances = state.Advances;
+        attribute.Value = updatedAttributeState.Value;
+        attribute.Bonus = updatedAttributeState.Bonus;
+        attribute.CostToAdvance = updatedAttributeState.GetAdvanceCost();
+        attribute.Advances = updatedAttributeState.Advances;
         character.Experience -= @event.ExperienceCost;
     }
 

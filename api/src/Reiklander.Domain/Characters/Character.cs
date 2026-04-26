@@ -27,16 +27,16 @@ public class Character : AggregateRoot
 
     public int ExperiencePoints { get; private set; }
 
-    public AttributeState WeaponSkill { get; private set; } = new();
-    public AttributeState BallisticSkill { get; private set; } = new();
-    public AttributeState Strength { get; private set; } = new();
-    public AttributeState Toughness { get; private set; } = new();
-    public AttributeState Initiative { get; private set; } = new();
-    public AttributeState Agility { get; private set; } = new();
-    public AttributeState Dexterity { get; private set; } = new();
-    public AttributeState Intelligence { get; private set; } = new();
-    public AttributeState Willpower { get; private set; } = new();
-    public AttributeState Fellowship { get; private set; } = new();
+    public AttributeState WeaponSkill { get; private set; } = new(0, 0);
+    public AttributeState BallisticSkill { get; private set; } = new(0, 0);
+    public AttributeState Strength { get; private set; } = new(0, 0);
+    public AttributeState Toughness { get; private set; } = new(0, 0);
+    public AttributeState Initiative { get; private set; } = new(0, 0);
+    public AttributeState Agility { get; private set; } = new(0, 0);
+    public AttributeState Dexterity { get; private set; } = new(0, 0);
+    public AttributeState Intelligence { get; private set; } = new(0, 0);
+    public AttributeState Willpower { get; private set; } = new(0, 0);
+    public AttributeState Fellowship { get; private set; } = new(0, 0);
 
     public void NameCharacter(string name)
     {

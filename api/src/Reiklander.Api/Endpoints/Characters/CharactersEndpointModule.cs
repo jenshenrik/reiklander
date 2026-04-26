@@ -10,6 +10,7 @@ using Reiklander.Application.Characters.AdvanceAttribute;
 using Reiklander.Contracts.Characters;
 using Reiklander.Domain.Characters;
 using Reiklander.Infrastructure;
+using Reiklander.Domain.Characters.Attributes;
 
 namespace Reiklander.Api.Endpoints.Characters;
 
