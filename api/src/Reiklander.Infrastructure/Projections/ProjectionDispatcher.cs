@@ -1,7 +1,7 @@
 using Reiklander.Application.Kernel;
 using Reiklander.Domain.Kernel;
 
-namespace Reiklander.Infrastructure;
+namespace Reiklander.Infrastructure.Projections;
 
 public class ProjectionDispatcher(IServiceProvider serviceProvider)
 {

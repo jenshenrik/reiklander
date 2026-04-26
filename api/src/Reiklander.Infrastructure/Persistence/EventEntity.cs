@@ -1,4 +1,4 @@
-namespace Reiklander.Infrastructure;
+namespace Reiklander.Infrastructure.Persistence;
 
 public class EventEntity
 {

@@ -1,4 +1,4 @@
-namespace Reiklander.Infrastructure;
+namespace Reiklander.Infrastructure.Queries.Characters.ReadModels;
 
 public class AttributeReadModel
 {

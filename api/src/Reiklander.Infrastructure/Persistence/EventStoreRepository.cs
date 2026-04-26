@@ -2,8 +2,9 @@ using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Reiklander.Domain.Characters.Events;
 using Reiklander.Domain.Kernel;
+using Reiklander.Infrastructure.Projections;
 
-namespace Reiklander.Infrastructure;
+namespace Reiklander.Infrastructure.Persistence;
 
 public class EventStoreRepository(EventStoreDbContext context, ProjectionDispatcher dispatcher) : IEventStoreRepository
 {

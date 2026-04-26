@@ -1,7 +1,8 @@
 using Reiklander.Application.Kernel;
 using Reiklander.Domain.Characters.Events;
+using Reiklander.Infrastructure.Persistence;
 
-namespace Reiklander.Infrastructure;
+namespace Reiklander.Infrastructure.Projections.Characters;
 
 public class ExperienceEarnedProjection(EventStoreDbContext context) : IProjectionHandler<ExperienceEarned>
 {

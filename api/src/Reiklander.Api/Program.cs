@@ -11,6 +11,10 @@ using Reiklander.Domain.Characters.Events;
 using Reiklander.Domain.Kernel;
 using Reiklander.Infrastructure;
 using Scalar.AspNetCore;
+using Reiklander.Infrastructure.Persistence;
+using Reiklander.Infrastructure.Queries.Characters;
+using Reiklander.Infrastructure.Projections;
+using Reiklander.Infrastructure.Projections.Characters;
 
 var builder = WebApplication.CreateBuilder(args);
 

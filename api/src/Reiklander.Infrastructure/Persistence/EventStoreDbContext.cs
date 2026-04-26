@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Reiklander.Infrastructure.Queries.Character.ReadModels;
 
-namespace Reiklander.Infrastructure;
+namespace Reiklander.Infrastructure.Persistence;
 
 public class EventStoreDbContext(DbContextOptions<EventStoreDbContext> options) : DbContext(options)
 {

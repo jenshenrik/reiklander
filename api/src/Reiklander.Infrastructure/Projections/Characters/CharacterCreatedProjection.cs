@@ -1,7 +1,9 @@
 using Reiklander.Application.Kernel;
 using Reiklander.Domain.Characters.Events;
+using Reiklander.Infrastructure.Persistence;
+using Reiklander.Infrastructure.Queries.Character.ReadModels;
 
-namespace Reiklander.Infrastructure;
+namespace Reiklander.Infrastructure.Projections.Characters;
 
 public class CharacterCreatedProjection(EventStoreDbContext context) : IProjectionHandler<CharacterCreated>
 {

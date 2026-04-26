@@ -1,9 +1,9 @@
 using Reiklander.Api.Endpoints.Characters.Contracts;
-using Reiklander.Contracts.Characters;
 using Reiklander.Contracts.Attributes;
 using Reiklander.Application;
+using Reiklander.Infrastructure.Persistence;
 
-namespace Reiklander.Infrastructure;
+namespace Reiklander.Infrastructure.Queries.Characters;
 
 public class CharacterQueries(EventStoreDbContext context) : ICharacterQueries
 {

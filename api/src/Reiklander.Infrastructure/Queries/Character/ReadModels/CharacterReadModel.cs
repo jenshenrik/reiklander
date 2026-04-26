@@ -1,4 +1,6 @@
-namespace Reiklander.Infrastructure;
+using Reiklander.Infrastructure.Queries.Characters.ReadModels;
+
+namespace Reiklander.Infrastructure.Queries.Character.ReadModels;
 
 public class CharacterReadModel
 {
