@@ -31,6 +31,8 @@ public class CharacterQueries(EventStoreDbContext context) : ICharacterQueries
             c.Species,
             c.Name,
             c.Experience,
+            c.ExperienceSpent,
+            c.ExperienceTotal,
             ws, bs, s, t, i, agi, dex, intel, wis, fel
         );
     }

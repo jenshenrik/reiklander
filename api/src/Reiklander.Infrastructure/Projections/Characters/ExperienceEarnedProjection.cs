@@ -15,5 +15,6 @@ public class ExperienceEarnedProjection(EventStoreDbContext context) : IProjecti
         if (character == null) return;
 
         character.Experience += @event.Amount;
+        character.ExperienceTotal += @event.Amount;
     }
 }

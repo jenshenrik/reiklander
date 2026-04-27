@@ -6,6 +6,8 @@ public class CharacterReadModel
     public string Species { get; set; } = default!;
     public string Name { get; set; } = default!;
     public int Experience { get; set; }
+    public int ExperienceSpent { get; set; }
+    public int ExperienceTotal { get; set; }
 
     public AttributeReadModel WeaponSkill { get; set; } = new();
     public AttributeReadModel BallisticSkill { get; set; } = new();

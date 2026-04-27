@@ -80,6 +80,9 @@ public class EventStoreRepository(EventStoreDbContext context, ProjectionDispatc
             nameof(ExperienceEarned) =>
                 JsonSerializer.Deserialize<ExperienceEarned>(e.Data)!,
 
+            nameof(ExperienceSpent) =>
+                JsonSerializer.Deserialize<ExperienceSpent>(e.Data)!,
+
             nameof(AttributeAdvanced) =>
                 JsonSerializer.Deserialize<AttributeAdvanced>(e.Data)!,
 

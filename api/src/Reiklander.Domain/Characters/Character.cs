@@ -14,6 +14,8 @@ public class Character : AggregateRoot
     public string Name { get; private set; } = default!;
 
     public int ExperiencePoints { get; private set; }
+    public int ExperiencePointsSpent { get; private set; }
+    public int ExperiencePointsTotal => ExperiencePoints + ExperiencePointsSpent;
 
     #region Attributes
     public AttributeState WeaponSkill { get; private set; } = new(0, 0);
@@ -68,7 +70,8 @@ public class Character : AggregateRoot
         if (cost > ExperiencePoints)
             throw new InvalidOperationException("Not enough XP");
 
-        Raise(new AttributeAdvanced(attribute, cost));
+        Raise(new ExperienceSpent(cost, $"Attribute advanced [{attribute}]"));
+        Raise(new AttributeAdvanced(attribute));
     }
 
     private AttributeState GetAttribute(AttributeType attribute)
@@ -108,14 +111,18 @@ public class Character : AggregateRoot
 
                 break;
 
+            case ExperienceSpent xp:
+                ExperiencePoints -= xp.Amount;
+                ExperiencePointsSpent += xp.Amount;
+
+                break;
+
             case CharacterCreated character:
                 Id = character.Id;
 
                 break;
 
             case AttributeAdvanced advance:
-                ExperiencePoints -= advance.ExperienceCost;
-
                 GetAttribute(advance.Attribute).Advance();
 
                 break;

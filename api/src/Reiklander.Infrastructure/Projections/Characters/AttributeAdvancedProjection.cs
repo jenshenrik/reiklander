@@ -26,7 +26,6 @@ public class AttributeAdvancedProjection(EventStoreDbContext context) : IProject
         attribute.Bonus = updatedAttributeState.Bonus;
         attribute.CostToAdvance = updatedAttributeState.GetAdvanceCost();
         attribute.Advances = updatedAttributeState.Advances;
-        character.Experience -= @event.ExperienceCost;
     }
 
     private static AttributeReadModel GetAttribute(CharacterReadModel character, AttributeType attribute) =>

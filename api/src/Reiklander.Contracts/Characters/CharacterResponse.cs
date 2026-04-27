@@ -5,7 +5,9 @@ namespace Reiklander.Api.Endpoints.Characters.Contracts;
 public record CharacterResponse(
     string Species,
     string Name,
-    int Xp,
+    int ExperiencePoints,
+    int ExperiencePointsSpent,
+    int ExperiencePointsTotal,
     AttributeResponse WeaponSkill,
     AttributeResponse BallisticSkill,
     AttributeResponse Strength,
