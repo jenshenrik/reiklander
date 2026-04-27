@@ -37,6 +37,7 @@ builder.Services.AddScoped<IProjectionHandler<CharacterCreated>, CharacterCreate
 builder.Services.AddScoped<IProjectionHandler<SpeciesSelected>, SpeciesSelectedProjection>();
 builder.Services.AddScoped<IProjectionHandler<NameCharacter>, NameCharacterProjection>();
 builder.Services.AddScoped<IProjectionHandler<ExperienceEarned>, ExperienceEarnedProjection>();
+builder.Services.AddScoped<IProjectionHandler<ExperienceSpent>, ExperienceSpentProjection>();
 builder.Services.AddScoped<IProjectionHandler<AttributeAdvanced>, AttributeAdvancedProjection>();
 
 builder.Services.AddApiVersioning(options =>
