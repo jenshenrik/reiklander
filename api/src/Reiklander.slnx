@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Reiklander.Api/Reiklander.Api.csproj" />
+  <Project Path="Reiklander.Application/Reiklander.Application.csproj" />
+  <Project Path="Reiklander.Contracts/Reiklander.Contracts.csproj" />
+  <Project Path="Reiklander.Domain/Reiklander.Domain.csproj" />
+  <Project Path="Reiklander.Infrastructure/Reiklander.Infrastructure.csproj" />
+</Solution>
