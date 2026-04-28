@@ -9,14 +9,14 @@ public class CharacterReadModel
     public int ExperienceSpent { get; set; }
     public int ExperienceTotal { get; set; }
 
-    public AttributeReadModel WeaponSkill { get; set; } = new();
-    public AttributeReadModel BallisticSkill { get; set; } = new();
-    public AttributeReadModel Strength { get; set; } = new();
-    public AttributeReadModel Toughness { get; set; } = new();
-    public AttributeReadModel Initiative { get; set; } = new();
-    public AttributeReadModel Agility { get; set; } = new();
-    public AttributeReadModel Dexterity { get; set; } = new();
-    public AttributeReadModel Intelligence { get; set; } = new();
-    public AttributeReadModel Willpower { get; set; } = new();
-    public AttributeReadModel Fellowship { get; set; } = new();
+    public CharacteristicReadModel WeaponSkill { get; set; } = new();
+    public CharacteristicReadModel BallisticSkill { get; set; } = new();
+    public CharacteristicReadModel Strength { get; set; } = new();
+    public CharacteristicReadModel Toughness { get; set; } = new();
+    public CharacteristicReadModel Initiative { get; set; } = new();
+    public CharacteristicReadModel Agility { get; set; } = new();
+    public CharacteristicReadModel Dexterity { get; set; } = new();
+    public CharacteristicReadModel Intelligence { get; set; } = new();
+    public CharacteristicReadModel Willpower { get; set; } = new();
+    public CharacteristicReadModel Fellowship { get; set; } = new();
 }

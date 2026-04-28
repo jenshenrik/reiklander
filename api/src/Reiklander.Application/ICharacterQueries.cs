@@ -1,4 +1,4 @@
-using Reiklander.Api.Endpoints.Characters.Contracts;
+using Reiklander.Contracts.Characters;
 
 namespace Reiklander.Application;
 

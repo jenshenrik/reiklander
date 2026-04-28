@@ -1,6 +1,6 @@
-using Reiklander.Contracts.Attributes;
+using Reiklander.Contracts.Characteristics;
 
-namespace Reiklander.Api.Endpoints.Characters.Contracts;
+namespace Reiklander.Contracts.Characters;
 
 public record CharacterResponse(
     string Species,
@@ -8,14 +8,14 @@ public record CharacterResponse(
     int ExperiencePoints,
     int ExperiencePointsSpent,
     int ExperiencePointsTotal,
-    AttributeResponse WeaponSkill,
-    AttributeResponse BallisticSkill,
-    AttributeResponse Strength,
-    AttributeResponse Toughness,
-    AttributeResponse Initiative,
-    AttributeResponse Agility,
-    AttributeResponse Dexterity,
-    AttributeResponse Intelligence,
-    AttributeResponse Willpower,
-    AttributeResponse Fellowship
+    CharacteristicResponse WeaponSkill,
+    CharacteristicResponse BallisticSkill,
+    CharacteristicResponse Strength,
+    CharacteristicResponse Toughness,
+    CharacteristicResponse Initiative,
+    CharacteristicResponse Agility,
+    CharacteristicResponse Dexterity,
+    CharacteristicResponse Intelligence,
+    CharacteristicResponse Willpower,
+    CharacteristicResponse Fellowship
 );

@@ -83,8 +83,8 @@ public class EventStoreRepository(EventStoreDbContext context, ProjectionDispatc
             nameof(ExperienceSpent) =>
                 JsonSerializer.Deserialize<ExperienceSpent>(e.Data)!,
 
-            nameof(AttributeAdvanced) =>
-                JsonSerializer.Deserialize<AttributeAdvanced>(e.Data)!,
+            nameof(CharacteristicAdvanced) =>
+                JsonSerializer.Deserialize<CharacteristicAdvanced>(e.Data)!,
 
             _ => throw new Exception("Unknown event type")
         };

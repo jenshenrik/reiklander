@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using Reiklander.Api.Endpoints.Characters;
 using Reiklander.Application;
-using Reiklander.Application.Characters.AdvanceAttribute;
+using Reiklander.Application.Characters.AdvanceCharacteristic;
 using Reiklander.Application.Characters.CreateCharacter;
 using Reiklander.Application.Characters.EarnExperiencePoints;
 using Reiklander.Application.Characters.NameCharacter;
@@ -28,7 +28,7 @@ builder.Services.AddScoped<CreateCharacterHandler>();
 builder.Services.AddScoped<SelectSpeciesHandler>();
 builder.Services.AddScoped<NameCharacterHandler>();
 builder.Services.AddScoped<EarnExperiencePointsHandler>();
-builder.Services.AddScoped<AdvanceAttributeHandler>();
+builder.Services.AddScoped<AdvanceCharacteristicHandler>();
 
 builder.Services.AddScoped<ICharacterQueries, CharacterQueries>();
 
@@ -38,7 +38,7 @@ builder.Services.AddScoped<IProjectionHandler<SpeciesSelected>, SpeciesSelectedP
 builder.Services.AddScoped<IProjectionHandler<NameCharacter>, NameCharacterProjection>();
 builder.Services.AddScoped<IProjectionHandler<ExperienceEarned>, ExperienceEarnedProjection>();
 builder.Services.AddScoped<IProjectionHandler<ExperienceSpent>, ExperienceSpentProjection>();
-builder.Services.AddScoped<IProjectionHandler<AttributeAdvanced>, AttributeAdvancedProjection>();
+builder.Services.AddScoped<IProjectionHandler<CharacteristicAdvanced>, CharacteristicAdvancedProjection>();
 
 builder.Services.AddApiVersioning(options =>
 {

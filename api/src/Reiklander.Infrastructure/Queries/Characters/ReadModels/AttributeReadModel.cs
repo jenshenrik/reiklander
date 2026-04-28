@@ -1,6 +1,6 @@
 namespace Reiklander.Infrastructure.Queries.Characters.ReadModels;
 
-public class AttributeReadModel
+public class CharacteristicReadModel
 {
     public int Value { get; set; }
     public int Bonus { get; set; }

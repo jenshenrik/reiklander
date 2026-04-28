@@ -1,17 +1,14 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Reiklander.Api.Endpoints.Characters.Contracts;
 using Reiklander.Application;
 using Reiklander.Application.Characters.CreateCharacter;
 using Reiklander.Application.Characters.NameCharacter;
 using Reiklander.Application.Characters.EarnExperiencePoints;
-using Reiklander.Application.Characters.AdvanceAttribute;
 using Reiklander.Contracts.Characters;
-using Reiklander.Domain.Characters;
-using Reiklander.Infrastructure;
-using Reiklander.Domain.Characters.Attributes;
 using Reiklander.Application.Characters.SelectSpecies;
+using Reiklander.Domain.Characters.Characteristics;
+using Reiklander.Application.Characters.AdvanceCharacteristic;
 
 namespace Reiklander.Api.Endpoints.Characters;
 
@@ -55,8 +52,8 @@ public static class CharactersEndpointModule
             .Produces(StatusCodes.Status404NotFound)
             .MapToApiVersion(1.0);
 
-        builder.MapPost("/{id}/attributes/{attribute}/advance", AdvanceAttribute)
-            .WithTags("Advance attribute")
+        builder.MapPost("/{id}/characteristics/{characteristic}/advance", AdvanceCharacteristic)
+            .WithTags("Advance characteristic")
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
@@ -120,9 +117,9 @@ public static class CharactersEndpointModule
         return TypedResults.Ok();
     }
 
-    private static async Task<IResult> AdvanceAttribute([FromRoute] Guid id, [FromRoute] AttributeType attribute, AdvanceAttributeHandler handler)
+    private static async Task<IResult> AdvanceCharacteristic([FromRoute] Guid id, [FromRoute] CharacteristicType characteristic, AdvanceCharacteristicHandler handler)
     {
-        await handler.Handle(new AdvanceAttributeCommand(id, attribute));
+        await handler.Handle(new AdvanceCharacteristicCommand(id, characteristic));
 
         return TypedResults.Ok();
     }

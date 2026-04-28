@@ -1,18 +1,19 @@
 using Reiklander.Domain.Characters;
 using Reiklander.Domain.Kernel;
 
-namespace Reiklander.Application.Characters.AdvanceAttribute;
+namespace Reiklander.Application.Characters.AdvanceCharacteristic;
 
-public class AdvanceAttributeHandler(IEventStoreRepository repository)
+public class AdvanceCharacteristicHandler(IEventStoreRepository repository)
 {
     private readonly IEventStoreRepository repository = repository;
 
-    public async Task Handle(AdvanceAttributeCommand command)
+    public async Task Handle(AdvanceCharacteristicCommand command)
     {
         var character = await repository.LoadAsync<Character>(command.CharacterId);
 
-        character.AdvanceAttribute(command.Attribute);
+        character.AdvanceCharacteristic(command.Characteristic);
 
         await repository.SaveAsync(character);
     }
 }
+

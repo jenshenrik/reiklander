@@ -1,6 +1,6 @@
-namespace Reiklander.Domain.Characters.Attributes;
+namespace Reiklander.Domain.Characters.Characteristics;
 
-public enum AttributeType
+public enum CharacteristicType
 {
     WeaponSkill,
     BallisticSkill,

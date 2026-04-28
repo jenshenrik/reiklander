@@ -1,4 +1,4 @@
-using Reiklander.Domain.Characters.Attributes;
+using Reiklander.Domain.Characters.Characteristics;
 using Reiklander.Domain.Characters.Events;
 using Reiklander.Domain.Kernel;
 
@@ -8,7 +8,6 @@ public class Character : AggregateRoot
 {
     public Character() { }
 
-
     public string Species { get; private set; } = default!;
 
     public string Name { get; private set; } = default!;
@@ -17,17 +16,17 @@ public class Character : AggregateRoot
     public int ExperiencePointsSpent { get; private set; }
     public int ExperiencePointsTotal => ExperiencePoints + ExperiencePointsSpent;
 
-    #region Attributes
-    public AttributeState WeaponSkill { get; private set; } = new(0, 0);
-    public AttributeState BallisticSkill { get; private set; } = new(0, 0);
-    public AttributeState Strength { get; private set; } = new(0, 0);
-    public AttributeState Toughness { get; private set; } = new(0, 0);
-    public AttributeState Initiative { get; private set; } = new(0, 0);
-    public AttributeState Agility { get; private set; } = new(0, 0);
-    public AttributeState Dexterity { get; private set; } = new(0, 0);
-    public AttributeState Intelligence { get; private set; } = new(0, 0);
-    public AttributeState Willpower { get; private set; } = new(0, 0);
-    public AttributeState Fellowship { get; private set; } = new(0, 0);
+    #region Characteristics
+    public CharacteristicState WeaponSkill { get; private set; } = new(0, 0);
+    public CharacteristicState BallisticSkill { get; private set; } = new(0, 0);
+    public CharacteristicState Strength { get; private set; } = new(0, 0);
+    public CharacteristicState Toughness { get; private set; } = new(0, 0);
+    public CharacteristicState Initiative { get; private set; } = new(0, 0);
+    public CharacteristicState Agility { get; private set; } = new(0, 0);
+    public CharacteristicState Dexterity { get; private set; } = new(0, 0);
+    public CharacteristicState Intelligence { get; private set; } = new(0, 0);
+    public CharacteristicState Willpower { get; private set; } = new(0, 0);
+    public CharacteristicState Fellowship { get; private set; } = new(0, 0);
     #endregion
 
     public static Character Create(Guid id)
@@ -63,32 +62,32 @@ public class Character : AggregateRoot
         Raise(new ExperienceEarned(amount));
     }
 
-    public void AdvanceAttribute(AttributeType attribute)
+    public void AdvanceCharacteristic(CharacteristicType characteristic)
     {
-        int cost = GetAttribute(attribute).GetAdvanceCost();
+        int cost = GetCharacteristic(characteristic).GetAdvanceCost();
 
         if (cost > ExperiencePoints)
             throw new InvalidOperationException("Not enough XP");
 
-        Raise(new ExperienceSpent(cost, $"Attribute advanced [{attribute}]"));
-        Raise(new AttributeAdvanced(attribute));
+        Raise(new ExperienceSpent(cost, $"Characteristic advanced [{characteristic}]"));
+        Raise(new CharacteristicAdvanced(characteristic));
     }
 
-    private AttributeState GetAttribute(AttributeType attribute)
+    private CharacteristicState GetCharacteristic(CharacteristicType characteristic)
     {
-        return attribute switch
+        return characteristic switch
         {
-            AttributeType.WeaponSkill => WeaponSkill,
-            AttributeType.BallisticSkill => BallisticSkill,
-            AttributeType.Strength => Strength,
-            AttributeType.Toughness => Toughness,
-            AttributeType.Initiative => Initiative,
-            AttributeType.Agility => Agility,
-            AttributeType.Dexterity => Dexterity,
-            AttributeType.Intelligence => Intelligence,
-            AttributeType.Willpower => Willpower,
-            AttributeType.Fellowship => Fellowship,
-            _ => throw new InvalidOperationException("Unknown attribute type"),
+            CharacteristicType.WeaponSkill => WeaponSkill,
+            CharacteristicType.BallisticSkill => BallisticSkill,
+            CharacteristicType.Strength => Strength,
+            CharacteristicType.Toughness => Toughness,
+            CharacteristicType.Initiative => Initiative,
+            CharacteristicType.Agility => Agility,
+            CharacteristicType.Dexterity => Dexterity,
+            CharacteristicType.Intelligence => Intelligence,
+            CharacteristicType.Willpower => Willpower,
+            CharacteristicType.Fellowship => Fellowship,
+            _ => throw new InvalidOperationException("Unknown CharacteristicType"),
         };
     }
 
@@ -122,8 +121,8 @@ public class Character : AggregateRoot
 
                 break;
 
-            case AttributeAdvanced advance:
-                GetAttribute(advance.Attribute).Advance();
+            case CharacteristicAdvanced advance:
+                GetCharacteristic(advance.Characteristic).Advance();
 
                 break;
         }
