@@ -9,6 +9,7 @@ using Reiklander.Contracts.Characters;
 using Reiklander.Application.Characters.SelectSpecies;
 using Reiklander.Domain.Characters.Characteristics;
 using Reiklander.Application.Characters.AdvanceCharacteristic;
+using Reiklander.Application.Characters.InitializeCharacteristics;
 
 namespace Reiklander.Api.Endpoints.Characters;
 
@@ -48,6 +49,13 @@ public static class CharactersEndpointModule
 
         builder.MapPost("/{id}/xp", EarnExperiencePoints)
             .WithTags("Earn experience points")
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .MapToApiVersion(1.0);
+
+        builder.MapPost("/{id}/characteristics/initialize", InitializeCharacteristics)
+            .WithTags("Initialize characteristics")
+            .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .MapToApiVersion(1.0);
@@ -113,6 +121,13 @@ public static class CharactersEndpointModule
     private static async Task<IResult> EarnExperiencePoints([FromRoute] Guid id, [FromBody] EarnXpRequest request, EarnExperiencePointsHandler handler)
     {
         await handler.Handle(new EarnExperiencePointsCommand(id, request.Amount));
+
+        return TypedResults.Ok();
+    }
+
+    private static async Task<IResult> InitializeCharacteristics(Guid id, InitializeCharacteristicsHandler handler)
+    {
+        await handler.Handle(new InitializeCharacteristicsCommand(id));
 
         return TypedResults.Ok();
     }

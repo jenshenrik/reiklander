@@ -62,6 +62,24 @@ public class Character : AggregateRoot
         Raise(new ExperienceEarned(amount));
     }
 
+    public void InitializeCharacteristics()
+    {
+        if (string.IsNullOrWhiteSpace(Species))
+            throw new InvalidOperationException("Characteristics cannot be initialized until a Species has been selected");
+
+        // TODO: make these depend on the selected species
+        Raise(new CharacteristicValueSet(CharacteristicType.WeaponSkill, 30));
+        Raise(new CharacteristicValueSet(CharacteristicType.BallisticSkill, 30));
+        Raise(new CharacteristicValueSet(CharacteristicType.Strength, 30));
+        Raise(new CharacteristicValueSet(CharacteristicType.Toughness, 30));
+        Raise(new CharacteristicValueSet(CharacteristicType.Initiative, 30));
+        Raise(new CharacteristicValueSet(CharacteristicType.Agility, 30));
+        Raise(new CharacteristicValueSet(CharacteristicType.Dexterity, 30));
+        Raise(new CharacteristicValueSet(CharacteristicType.Intelligence, 30));
+        Raise(new CharacteristicValueSet(CharacteristicType.Willpower, 30));
+        Raise(new CharacteristicValueSet(CharacteristicType.Fellowship, 30));
+    }
+
     public void AdvanceCharacteristic(CharacteristicType characteristic)
     {
         int cost = GetCharacteristic(characteristic).AdvanceCost;
@@ -118,6 +136,47 @@ public class Character : AggregateRoot
 
             case CharacterCreated character:
                 Id = character.Id;
+
+                break;
+
+            case CharacteristicValueSet characteristic:
+                switch (characteristic.Characteristic)
+                {
+                    case CharacteristicType.WeaponSkill:
+                        WeaponSkill = new CharacteristicState(characteristic.Value, WeaponSkill.Advances);
+                        break;
+                    case CharacteristicType.BallisticSkill:
+                        BallisticSkill = new CharacteristicState(characteristic.Value, BallisticSkill.Advances);
+                        break;
+                    case CharacteristicType.Strength:
+                        Strength = new CharacteristicState(characteristic.Value, Strength.Advances);
+                        break;
+                    case CharacteristicType.Toughness:
+                        Toughness = new CharacteristicState(characteristic.Value, Toughness.Advances);
+                        break;
+                    case CharacteristicType.Initiative:
+                        Initiative = new CharacteristicState(characteristic.Value, Initiative.Advances);
+                        break;
+                    case CharacteristicType.Agility:
+                        Agility = new CharacteristicState(characteristic.Value, Agility.Advances);
+                        break;
+                    case CharacteristicType.Dexterity:
+                        Dexterity = new CharacteristicState(characteristic.Value, Dexterity.Advances);
+                        break;
+                    case CharacteristicType.Intelligence:
+                        Intelligence = new CharacteristicState(characteristic.Value, Intelligence.Advances);
+                        break;
+                    case CharacteristicType.Willpower:
+                        Willpower = new CharacteristicState(characteristic.Value, Willpower.Advances);
+                        break;
+                    case CharacteristicType.Fellowship:
+                        Fellowship = new CharacteristicState(characteristic.Value, Fellowship.Advances);
+                        break;
+
+                    default:
+                        throw new InvalidOperationException($"Unknown characteristic type [{characteristic.Characteristic}]");
+                }
+                ;
 
                 break;
 

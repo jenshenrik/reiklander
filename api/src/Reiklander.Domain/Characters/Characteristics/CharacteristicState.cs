@@ -21,7 +21,7 @@ public record CharacteristicState(int Value, int Advances)
             > 50 => throw new InvalidOperationException("Characteristic cannot be advanced further")
         };
 
-    public CharacteristicState Advance() => new(Value + 1, Advances + 1);
+    public CharacteristicState Advance() => this with { Value = Value + 1, Advances = Advances + 1 };
 
     public static CharacteristicState From(int value, int advances) =>
         new(value, advances);

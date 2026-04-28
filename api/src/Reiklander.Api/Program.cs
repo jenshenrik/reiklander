@@ -5,6 +5,7 @@ using Reiklander.Application;
 using Reiklander.Application.Characters.AdvanceCharacteristic;
 using Reiklander.Application.Characters.CreateCharacter;
 using Reiklander.Application.Characters.EarnExperiencePoints;
+using Reiklander.Application.Characters.InitializeCharacteristics;
 using Reiklander.Application.Characters.NameCharacter;
 using Reiklander.Application.Characters.SelectSpecies;
 using Reiklander.Application.Kernel;
@@ -28,6 +29,7 @@ builder.Services.AddScoped<CreateCharacterHandler>();
 builder.Services.AddScoped<SelectSpeciesHandler>();
 builder.Services.AddScoped<NameCharacterHandler>();
 builder.Services.AddScoped<EarnExperiencePointsHandler>();
+builder.Services.AddScoped<InitializeCharacteristicsHandler>();
 builder.Services.AddScoped<AdvanceCharacteristicHandler>();
 
 builder.Services.AddScoped<ICharacterQueries, CharacterQueries>();
@@ -38,6 +40,7 @@ builder.Services.AddScoped<IProjectionHandler<SpeciesSelected>, SpeciesSelectedP
 builder.Services.AddScoped<IProjectionHandler<NameCharacter>, NameCharacterProjection>();
 builder.Services.AddScoped<IProjectionHandler<ExperienceEarned>, ExperienceEarnedProjection>();
 builder.Services.AddScoped<IProjectionHandler<ExperienceSpent>, ExperienceSpentProjection>();
+builder.Services.AddScoped<IProjectionHandler<CharacteristicValueSet>, CharacteristicValueSetProjection>();
 builder.Services.AddScoped<IProjectionHandler<CharacteristicAdvanced>, CharacteristicAdvancedProjection>();
 
 builder.Services.AddApiVersioning(options =>
