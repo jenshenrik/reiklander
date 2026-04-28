@@ -24,7 +24,7 @@ public class CharacteristicAdvancedProjection(EventStoreDbContext context) : IPr
 
         characteristic.Value = updatedCharacteristicState.Value;
         characteristic.Bonus = updatedCharacteristicState.Bonus;
-        characteristic.CostToAdvance = updatedCharacteristicState.GetAdvanceCost();
+        characteristic.CostToAdvance = updatedCharacteristicState.AdvanceCost;
         characteristic.Advances = updatedCharacteristicState.Advances;
     }
 

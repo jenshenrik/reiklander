@@ -64,7 +64,7 @@ public class Character : AggregateRoot
 
     public void AdvanceCharacteristic(CharacteristicType characteristic)
     {
-        int cost = GetCharacteristic(characteristic).GetAdvanceCost();
+        int cost = GetCharacteristic(characteristic).AdvanceCost;
 
         if (cost > ExperiencePoints)
             throw new InvalidOperationException("Not enough XP");
