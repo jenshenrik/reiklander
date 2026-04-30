@@ -4,7 +4,7 @@ using Reiklander.Domain.Kernel;
 
 namespace Reiklander.Domain.Characters;
 
-public class Character : AggregateRoot
+public class Character : AggregateRoot<CharacterId, Guid>
 {
     public Character() { }
 
@@ -29,17 +29,11 @@ public class Character : AggregateRoot
     public CharacteristicState Fellowship { get; private set; } = new(0, 0);
     #endregion
 
-    public static Character Create(Guid id)
+    public static Character Create()
     {
-        if (id == Guid.Empty)
-            throw new InvalidDataException("Character ID is not a valid GUID");
+        var character = new Character();
 
-        var character = new Character
-        {
-            Id = id,
-        };
-
-        character.Raise(new CharacterCreated(id));
+        character.Raise(new CharacterCreated(CharacterId.Create()));
 
         return character;
     }

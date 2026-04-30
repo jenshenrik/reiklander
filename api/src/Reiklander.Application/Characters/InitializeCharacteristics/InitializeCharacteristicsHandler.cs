@@ -7,7 +7,7 @@ public class InitializeCharacteristicsHandler(IEventStoreRepository repository)
 {
     public async Task Handle(InitializeCharacteristicsCommand command)
     {
-        var character = await repository.LoadAsync<Character>(command.Id);
+        var character = await repository.LoadAsync<Character, CharacterId, Guid>(command.CharacterId);
 
         character.InitializeCharacteristics();
 

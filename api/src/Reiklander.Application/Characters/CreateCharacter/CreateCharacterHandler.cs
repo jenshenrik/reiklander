@@ -7,12 +7,10 @@ public class CreateCharacterHandler(IEventStoreRepository repository)
 {
     public async Task<Guid> Handle(CreateCharacterCommand command)
     {
-        var id = Guid.NewGuid();
-
-        var character = Character.Create(id);
+        var character = Character.Create();
 
         await repository.SaveAsync(character);
 
-        return id;
+        return character.Id.Value;
     }
 }

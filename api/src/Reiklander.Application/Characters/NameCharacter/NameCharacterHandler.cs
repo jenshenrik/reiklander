@@ -9,7 +9,7 @@ public class NameCharacterHandler(IEventStoreRepository repository)
 
     public async Task Handle(NameCharacterCommand command)
     {
-        var character = await repository.LoadAsync<Character>(command.CharacterId);
+        var character = await repository.LoadAsync<Character, CharacterId, Guid>(command.CharacterId);
 
         character.NameCharacter(command.Name);
 

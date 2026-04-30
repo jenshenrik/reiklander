@@ -10,6 +10,7 @@ using Reiklander.Application.Characters.SelectSpecies;
 using Reiklander.Domain.Characters.Characteristics;
 using Reiklander.Application.Characters.AdvanceCharacteristic;
 using Reiklander.Application.Characters.InitializeCharacteristics;
+using Reiklander.Domain.Characters;
 
 namespace Reiklander.Api.Endpoints.Characters;
 
@@ -101,7 +102,7 @@ public static class CharactersEndpointModule
 
     private static async Task<IResult> SelectSpeciesAsync(Guid id, [FromBody] SelectSpeciesRequest request, SelectSpeciesHandler handler)
     {
-        await handler.Handle(new SelectSpeciesCommand(id, request.SpeciesName));
+        await handler.Handle(new SelectSpeciesCommand(CharacterId.From(id), request.SpeciesName));
 
         return TypedResults.Ok();
     }
@@ -111,30 +112,28 @@ public static class CharactersEndpointModule
         if (string.IsNullOrWhiteSpace(request.Name))
             return Results.BadRequest("Name cannot be empty.");
 
-        Console.WriteLine($"{id}");
-
-        await handler.Handle(new NameCharacterCommand(id, request.Name));
+        await handler.Handle(new NameCharacterCommand(CharacterId.From(id), request.Name));
 
         return TypedResults.Ok();
     }
 
     private static async Task<IResult> EarnExperiencePoints([FromRoute] Guid id, [FromBody] EarnXpRequest request, EarnExperiencePointsHandler handler)
     {
-        await handler.Handle(new EarnExperiencePointsCommand(id, request.Amount));
+        await handler.Handle(new EarnExperiencePointsCommand(CharacterId.From(id), request.Amount));
 
         return TypedResults.Ok();
     }
 
     private static async Task<IResult> InitializeCharacteristics(Guid id, InitializeCharacteristicsHandler handler)
     {
-        await handler.Handle(new InitializeCharacteristicsCommand(id));
+        await handler.Handle(new InitializeCharacteristicsCommand(CharacterId.From(id)));
 
         return TypedResults.Ok();
     }
 
     private static async Task<IResult> AdvanceCharacteristic([FromRoute] Guid id, [FromRoute] CharacteristicType characteristic, AdvanceCharacteristicHandler handler)
     {
-        await handler.Handle(new AdvanceCharacteristicCommand(id, characteristic));
+        await handler.Handle(new AdvanceCharacteristicCommand(CharacterId.From(id), characteristic));
 
         return TypedResults.Ok();
     }

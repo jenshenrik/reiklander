@@ -1,10 +1,17 @@
-using Reiklander.Domain.Characters;
-
 namespace Reiklander.Domain.Kernel;
+
+public abstract class AggregateRoot<TId, TPrimitive> : AggregateRoot
+    where TId : struct, IAggregateId<TId, TPrimitive>
+    where TPrimitive : notnull
+{
+    public TId Id { get; protected set; }
+
+    public override object IdValue => Id.Value;
+}
 
 public abstract class AggregateRoot
 {
-    public Guid Id { get; protected set; }
+    public abstract object IdValue { get; }
 
     public int Version { get; private set; }
 

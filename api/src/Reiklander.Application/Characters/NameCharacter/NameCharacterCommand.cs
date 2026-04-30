@@ -1,3 +1,5 @@
+using Reiklander.Domain.Characters;
+
 namespace Reiklander.Application.Characters.NameCharacter;
 
-public record NameCharacterCommand(Guid CharacterId, string Name);
+public record NameCharacterCommand(CharacterId CharacterId, string Name);

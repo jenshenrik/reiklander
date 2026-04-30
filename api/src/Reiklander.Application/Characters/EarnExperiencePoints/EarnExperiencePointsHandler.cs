@@ -9,7 +9,7 @@ public class EarnExperiencePointsHandler(IEventStoreRepository repository)
 
     public async Task Handle(EarnExperiencePointsCommand command)
     {
-        var character = await repository.LoadAsync<Character>(command.CharacterId);
+        var character = await repository.LoadAsync<Character, CharacterId, Guid>(command.CharacterId);
 
         character.EarnExperience(command.Amount);
 

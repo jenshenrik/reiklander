@@ -9,7 +9,7 @@ public class AdvanceCharacteristicHandler(IEventStoreRepository repository)
 
     public async Task Handle(AdvanceCharacteristicCommand command)
     {
-        var character = await repository.LoadAsync<Character>(command.CharacterId);
+        var character = await repository.LoadAsync<Character, CharacterId, Guid>(command.CharacterId);
 
         character.AdvanceCharacteristic(command.Characteristic);
 

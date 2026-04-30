@@ -11,7 +11,7 @@ public class SelectSpeciesHandler(IEventStoreRepository eventStoreRepository, IS
 
     public async Task Handle(SelectSpeciesCommand command)
     {
-        var character = await eventStoreRepository.LoadAsync<Character>(command.CharacterId);
+        var character = await eventStoreRepository.LoadAsync<Character, CharacterId, Guid>(command.CharacterId);
         var species = await speciesRepository.GetAsync(command.SpeciesIdentifier);
 
         character.SelectSpecies(species.Name);

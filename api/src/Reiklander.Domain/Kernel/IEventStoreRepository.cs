@@ -2,6 +2,10 @@ namespace Reiklander.Domain.Kernel;
 
 public interface IEventStoreRepository
 {
-    Task<T> LoadAsync<T>(Guid id) where T : AggregateRoot, new();
+    Task<TAggregate> LoadAsync<TAggregate, TId, TPrimitive>(TId id)
+        where TAggregate : AggregateRoot<TId, TPrimitive>, new()
+        where TId : struct, IAggregateId<TId, TPrimitive>
+        where TPrimitive : notnull;
+
     Task SaveAsync(AggregateRoot aggregate);
 }
