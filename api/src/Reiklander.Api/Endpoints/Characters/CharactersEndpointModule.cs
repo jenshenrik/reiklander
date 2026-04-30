@@ -38,7 +38,7 @@ public static class CharactersEndpointModule
 
         builder.MapPost("/", CreateCharacterAsync)
             .WithTags("Create new character")
-            .Produces<Guid>(StatusCodes.Status201Created)
+            .Produces<CreateCharacterResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .MapToApiVersion(1.0);
 
@@ -97,7 +97,7 @@ public static class CharactersEndpointModule
     {
         var id = await handler.Handle(new CreateCharacterCommand());
 
-        return TypedResults.Created($"/characters/{id}", id);
+        return TypedResults.Created($"/characters/{id}", new CreateCharacterResponse(id));
     }
 
     private static async Task<IResult> SelectSpeciesAsync(Guid id, [FromBody] SelectSpeciesRequest request, SelectSpeciesHandler handler)
