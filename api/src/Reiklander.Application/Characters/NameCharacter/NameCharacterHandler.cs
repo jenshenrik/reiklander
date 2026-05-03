@@ -13,7 +13,7 @@ public class NameCharacterHandler(IEventStoreRepository repository)
 
         character.NameCharacter(command.Name);
 
-        await repository.SaveAsync(character);
+        await repository.SaveAsync<Character, CharacterId, Guid>(character);
     }
 }
 

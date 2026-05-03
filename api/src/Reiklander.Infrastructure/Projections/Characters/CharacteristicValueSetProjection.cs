@@ -5,11 +5,11 @@ using Reiklander.Infrastructure.Persistence;
 
 namespace Reiklander.Infrastructure.Projections.Characters;
 
-public class CharacteristicValueSetProjection(EventStoreDbContext context) : IProjectionHandler<CharacteristicValueSet>
+public class CharacteristicValueSetProjection(EventStoreDbContext context) : IProjectionHandler<CharacteristicValueSet, Guid>
 {
-    public async Task Handle(CharacteristicValueSet @event, Guid aggregateId)
+    public async Task Handle(CharacteristicValueSet @event, IEventEnvelope<Guid> envelope)
     {
-        var character = await context.Characters.FindAsync(aggregateId);
+        var character = await context.Characters.FindAsync(envelope.AggregateId.Value);
 
         if (character == null)
             return;

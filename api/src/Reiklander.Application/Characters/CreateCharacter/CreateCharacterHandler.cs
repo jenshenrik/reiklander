@@ -9,7 +9,7 @@ public class CreateCharacterHandler(IEventStoreRepository repository)
     {
         var character = Character.Create();
 
-        await repository.SaveAsync(character);
+        await repository.SaveAsync<Character, CharacterId, Guid>(character);
 
         return character.Id.Value;
     }

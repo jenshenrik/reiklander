@@ -13,6 +13,6 @@ public class EarnExperiencePointsHandler(IEventStoreRepository repository)
 
         character.EarnExperience(command.Amount);
 
-        await repository.SaveAsync(character);
+        await repository.SaveAsync<Character, CharacterId, Guid>(character);
     }
 }

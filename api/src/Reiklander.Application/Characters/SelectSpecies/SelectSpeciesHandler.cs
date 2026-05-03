@@ -16,6 +16,6 @@ public class SelectSpeciesHandler(IEventStoreRepository eventStoreRepository, IS
 
         character.SelectSpecies(species.Name);
 
-        await eventStoreRepository.SaveAsync(character);
+        await eventStoreRepository.SaveAsync<Character, CharacterId, Guid>(character);
     }
 }

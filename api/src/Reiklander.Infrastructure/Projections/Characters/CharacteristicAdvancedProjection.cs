@@ -6,13 +6,13 @@ using Reiklander.Infrastructure.Queries.Characters.ReadModels;
 
 namespace Reiklander.Infrastructure.Projections.Characters;
 
-public class CharacteristicAdvancedProjection(EventStoreDbContext context) : IProjectionHandler<CharacteristicAdvanced>
+public class CharacteristicAdvancedProjection(EventStoreDbContext context) : IProjectionHandler<CharacteristicAdvanced, Guid>
 {
     private readonly EventStoreDbContext context = context;
 
-    public async Task Handle(CharacteristicAdvanced @event, Guid aggregateId)
+    public async Task Handle(CharacteristicAdvanced @event, IEventEnvelope<Guid> envelope)
     {
-        var character = await context.Characters.FindAsync(aggregateId);
+        var character = await context.Characters.FindAsync(envelope.AggregateId.Value);
 
         if (character == null)
             return;

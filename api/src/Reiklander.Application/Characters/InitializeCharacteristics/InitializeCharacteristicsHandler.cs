@@ -11,6 +11,6 @@ public class InitializeCharacteristicsHandler(IEventStoreRepository repository)
 
         character.InitializeCharacteristics();
 
-        await repository.SaveAsync(character);
+        await repository.SaveAsync<Character, CharacterId, Guid>(character);
     }
 }

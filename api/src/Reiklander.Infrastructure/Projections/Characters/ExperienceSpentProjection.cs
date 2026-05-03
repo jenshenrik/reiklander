@@ -4,11 +4,11 @@ using Reiklander.Infrastructure.Persistence;
 
 namespace Reiklander.Infrastructure.Projections.Characters;
 
-public class ExperienceSpentProjection(EventStoreDbContext context) : IProjectionHandler<ExperienceSpent>
+public class ExperienceSpentProjection(EventStoreDbContext context) : IProjectionHandler<ExperienceSpent, Guid>
 {
-    public async Task Handle(ExperienceSpent @event, Guid aggregateId)
+    public async Task Handle(ExperienceSpent @event, IEventEnvelope<Guid> envelope)
     {
-        var character = await context.Characters.FindAsync(aggregateId);
+        var character = await context.Characters.FindAsync(envelope.AggregateId.Value);
 
         if (character == null)
             return;

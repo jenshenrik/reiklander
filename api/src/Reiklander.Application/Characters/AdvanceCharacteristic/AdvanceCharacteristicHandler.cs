@@ -13,7 +13,7 @@ public class AdvanceCharacteristicHandler(IEventStoreRepository repository)
 
         character.AdvanceCharacteristic(command.Characteristic);
 
-        await repository.SaveAsync(character);
+        await repository.SaveAsync<Character, CharacterId, Guid>(character);
     }
 }
 

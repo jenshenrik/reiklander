@@ -15,15 +15,20 @@ public class EventStoreRepository(EventStoreDbContext context, ProjectionDispatc
         Converters = { new AggregateIdJsonConverterFactory() }
     };
 
-    public async Task SaveAsync(AggregateRoot aggregate)
+    public async Task SaveAsync<TAggregate, TId, TPrimitive>(TAggregate aggregate)
+        where TAggregate : AggregateRoot<TId, TPrimitive>
+        where TId : struct, IAggregateId<TId, TPrimitive>
+        where TPrimitive : notnull
     {
         var events = aggregate.UncommittedEvents;
 
         if (!events.Any())
             return;
 
+        var aggregateIdString = Convert.ToString(aggregate.Id.Value, CultureInfo.InvariantCulture)!;
+
         var currentVersion = await context.Events
-            .Where(x => x.AggregateId == Convert.ToString(aggregate.IdValue, CultureInfo.InvariantCulture))
+            .Where(x => x.AggregateId == aggregateIdString)
             .Select(x => (int?)x.Version)
             .MaxAsync() ?? 0;
 
@@ -36,7 +41,7 @@ public class EventStoreRepository(EventStoreDbContext context, ProjectionDispatc
             var entity = new EventEntity
             {
                 Id = Guid.NewGuid(),
-                AggregateId = aggregate.IdValue.ToString()!,
+                AggregateId = aggregateIdString,
                 AggregateType = aggregate.GetType().Name,
                 Version = version,
                 EventType = e.GetType().Name,
@@ -47,7 +52,15 @@ public class EventStoreRepository(EventStoreDbContext context, ProjectionDispatc
             context.Events.Add(entity);
 
             var domainEvent = Deserialize(entity);
-            await dispatcher.Dispatch(domainEvent, Guid.Parse(entity.AggregateId));
+
+            var envelope = new EventEnvelope<TPrimitive>(
+                    domainEvent,
+                    aggregate.Id,
+                    entity.Version,
+                    entity.OccurredOn
+                    );
+
+            await dispatcher.Dispatch(envelope);
         }
 
         await context.SaveChangesAsync();

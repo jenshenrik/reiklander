@@ -4,13 +4,13 @@ using Reiklander.Infrastructure.Persistence;
 
 namespace Reiklander.Infrastructure.Projections.Characters;
 
-public class ExperienceEarnedProjection(EventStoreDbContext context) : IProjectionHandler<ExperienceEarned>
+public class ExperienceEarnedProjection(EventStoreDbContext context) : IProjectionHandler<ExperienceEarned, Guid>
 {
     private readonly EventStoreDbContext context = context;
 
-    public async Task Handle(ExperienceEarned @event, Guid aggregateId)
+    public async Task Handle(ExperienceEarned @event, IEventEnvelope<Guid> envelope)
     {
-        var character = await context.Characters.FindAsync(aggregateId);
+        var character = await context.Characters.FindAsync(envelope.AggregateId.Value);
 
         if (character == null) return;
 

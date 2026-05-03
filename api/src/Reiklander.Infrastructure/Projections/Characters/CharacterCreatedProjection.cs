@@ -5,15 +5,15 @@ using Reiklander.Infrastructure.Queries.Characters.ReadModels;
 
 namespace Reiklander.Infrastructure.Projections.Characters;
 
-public class CharacterCreatedProjection(EventStoreDbContext context) : IProjectionHandler<CharacterCreated>
+public class CharacterCreatedProjection(EventStoreDbContext context) : IProjectionHandler<CharacterCreated, Guid>
 {
     private readonly EventStoreDbContext context = context;
 
-    public async Task Handle(CharacterCreated @event, Guid aggregateId)
+    public async Task Handle(CharacterCreated @event, IEventEnvelope<Guid> envelope)
     {
         context.Characters.Add(new CharacterReadModel
         {
-            Id = aggregateId,
+            Id = envelope.AggregateId.Value,
             Experience = 0
         });
     }

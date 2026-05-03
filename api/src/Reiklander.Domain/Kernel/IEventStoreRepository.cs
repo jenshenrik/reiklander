@@ -7,5 +7,8 @@ public interface IEventStoreRepository
         where TId : struct, IAggregateId<TId, TPrimitive>
         where TPrimitive : notnull;
 
-    Task SaveAsync(AggregateRoot aggregate);
+    Task SaveAsync<TAggregate, TId, TPrimitive>(TAggregate aggregate)
+        where TAggregate : AggregateRoot<TId, TPrimitive>
+        where TId : struct, IAggregateId<TId, TPrimitive>
+        where TPrimitive : notnull;
 }

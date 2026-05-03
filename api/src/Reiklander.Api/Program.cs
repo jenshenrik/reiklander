@@ -35,13 +35,13 @@ builder.Services.AddScoped<AdvanceCharacteristicHandler>();
 builder.Services.AddScoped<ICharacterQueries, CharacterQueries>();
 
 builder.Services.AddScoped<ProjectionDispatcher>();
-builder.Services.AddScoped<IProjectionHandler<CharacterCreated>, CharacterCreatedProjection>();
-builder.Services.AddScoped<IProjectionHandler<SpeciesSelected>, SpeciesSelectedProjection>();
-builder.Services.AddScoped<IProjectionHandler<NameCharacter>, NameCharacterProjection>();
-builder.Services.AddScoped<IProjectionHandler<ExperienceEarned>, ExperienceEarnedProjection>();
-builder.Services.AddScoped<IProjectionHandler<ExperienceSpent>, ExperienceSpentProjection>();
-builder.Services.AddScoped<IProjectionHandler<CharacteristicValueSet>, CharacteristicValueSetProjection>();
-builder.Services.AddScoped<IProjectionHandler<CharacteristicAdvanced>, CharacteristicAdvancedProjection>();
+builder.Services.AddScoped<IProjectionHandler<CharacterCreated, Guid>, CharacterCreatedProjection>();
+builder.Services.AddScoped<IProjectionHandler<SpeciesSelected, Guid>, SpeciesSelectedProjection>();
+builder.Services.AddScoped<IProjectionHandler<NameCharacter, Guid>, NameCharacterProjection>();
+builder.Services.AddScoped<IProjectionHandler<ExperienceEarned, Guid>, ExperienceEarnedProjection>();
+builder.Services.AddScoped<IProjectionHandler<ExperienceSpent, Guid>, ExperienceSpentProjection>();
+builder.Services.AddScoped<IProjectionHandler<CharacteristicValueSet, Guid>, CharacteristicValueSetProjection>();
+builder.Services.AddScoped<IProjectionHandler<CharacteristicAdvanced, Guid>, CharacteristicAdvancedProjection>();
 
 builder.Services.AddApiVersioning(options =>
 {
